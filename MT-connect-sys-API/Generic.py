@@ -2,16 +2,16 @@
 from random import randint
 
 token_url = 'https://identity.dev-regalpay.io/connect/token'
-Username = 'chethan@regal-us.com'
-Password = 'Chethan@1995'
+Username = 'ruchita@regal-us.com'
+Password = 'Ruchita@12345'
 client_id = 'MineralTreePaymentsOpsApp'
 client_secret = 'QN9wyWRJPdr2KTYp'
 grant_type = 'password'
 Scope = 'openid mtc-sys:manage:setup'
 
 #
-random_value = randint(10, 20000000)
-random_value1 = randint(5656, 936963)
+random_value = randint(100, 20000000)
+random_value1 = randint(11111, 99999)
 # Urls
 url = 'https://api.dev-regalpay.io/mt-connect-sys/'
 
@@ -33,21 +33,23 @@ Tenant_ID = '3a70dfb8-c21e-4831-2b58-08d8b13da1e5'
 addressLine1 = 'Regal Regus building'
 addressLine2 = 'Ibis hotel'
 addressLine3 = 'halli pura'
-city = 'Bangalore'
-state = 'Karnataka'
+city = 'Bangalore 1'
+state = 'Karnataka 1'
 countryCode = 'IN'
 zipCode = '12345'
-country = 'India'
+country = 'India 1'
 
 nextCheckNumber = random_value
 defaultNumberOfDaysForDisbursement = 5
+settlementType1 = 'Batch'
+settlementType2 = 'Payment'
 
 fundingAlias = 'fundingAlias'
 defaultCardValidity = '60'
 cardType = 'SingleUse'
 
 defaultMailingCodeType = 'MailUSPStoPayee'
-defaultHandlingCodeType = 'Default'
+defaultHandlingCodeType = 'FedexToPayee'
 checkFileName = 'checkFileName'
 
 fileName = 'fileName'

@@ -33,7 +33,8 @@ NoPermission_header = {'Authorization': 'Bearer ' + tokens_np['access_token'], '
 # Post Default Setup for Company Account API
 print("1.1 Verify user is not able to Post Default Setup for Company Account with expired token")
 parameters = {'defaultNumberOfDaysForDisbursement': defaultNumberOfDaysForDisbursement,
-              'nextCheckNumber': nextCheckNumber}
+              'nextCheckNumber': nextCheckNumber,
+              'settlementType': settlementType1}
 response = requests.post(url + default_setup, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -47,7 +48,8 @@ print('Payload:\n{}'.format(response.text))
 
 print("1.3 Verify user is not able to Post Default Setup for Company Account with defaultNumberOfDaysForDisbursement 0")
 parameters = {'defaultNumberOfDaysForDisbursement': 0,
-              'nextCheckNumber': 0}
+              'nextCheckNumber': 0,
+              'settlementType': settlementType1}
 response = requests.post(url + default_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -55,8 +57,29 @@ print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
 print("1.4 Verify user is not able to Post Default Setup for Company Account with nextCheckNumber 0")
-parameters = {'defaultNumberOfDaysForDisbursement': 0,
-              'nextCheckNumber': 0}
+parameters = {'defaultNumberOfDaysForDisbursement': 10,
+              'nextCheckNumber': 0,
+              'settlementType': settlementType1}
+response = requests.post(url + default_setup, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("1.5 Verify user is not able to Post Default Setup for Company Account with invalid settlementType")
+parameters = {'defaultNumberOfDaysForDisbursement': 10,
+              'nextCheckNumber': 2,
+              'settlementType': 'Invalid'}
+response = requests.post(url + default_setup, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("1.5 Verify user is not able to Post Default Setup for Company Account with nextCheckNumber less than the current check number")
+parameters = {'defaultNumberOfDaysForDisbursement': 10,
+              'nextCheckNumber': 2,
+              'settlementType': settlementType1}
 response = requests.post(url + default_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -101,6 +124,36 @@ print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
+print("2.4 Verify user is not able to Add Address for a Company Account with Zip code more than 5 digits characters")
+parameters = {'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': countryCode,
+              'zipCode': '123456789',
+              'country': country}
+response = requests.post(url + company_address, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("2.5 Verify user is not able to Add Address for a Company Account with Country code more than two characters")
+parameters = {'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': 'USA',
+              'zipCode': zipCode,
+              'country': country}
+response = requests.post(url + company_address, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
 # Add Card-account for Company Account
 print("3.1 Verify user is not able to Add Card-account for Payment_ops Company Account with expired token.")
 parameters = {'fundingAlias': fundingAlias,
@@ -133,6 +186,16 @@ print("3.4 Verify user is not able to Add Card-account for Payment_ops Company A
 parameters = {'fundingAlias': fundingAlias,
               'defaultCardValidity': 0,
               'cardType': cardType}
+response = requests.post(url + card_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("3.5 Verify user is not able to Add Card-account for Payment_ops Company Account with invalid cardType.")
+parameters = {'fundingAlias': fundingAlias,
+              'defaultCardValidity': 1,
+              'cardType': 'Invalid'}
 response = requests.post(url + card_account, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -177,6 +240,82 @@ parameters = {'defaultMailingCodeType': '',
               'countryCode': '',
               'zipCode': '',
               'country': ''
+              }
+response = requests.post(url + check_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("4.4 Verify user is not able to Add check-account for Payment_ops Company Account with invalid Zipcode.")
+parameters = {'defaultMailingCodeType': defaultMailingCodeType,
+              'defaultHandlingCodeType': defaultHandlingCodeType,
+              'checkFileName': checkFileName,
+              'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': countryCode,
+              'zipCode': '123456',
+              'country': country
+              }
+response = requests.post(url + check_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("4.5 Verify user is not able to Add check-account for Payment_ops Company Account with invalid Country Code.")
+parameters = {'defaultMailingCodeType': defaultMailingCodeType,
+              'defaultHandlingCodeType': defaultHandlingCodeType,
+              'checkFileName': checkFileName,
+              'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': 'USA',
+              'zipCode': zipCode,
+              'country': country
+              }
+response = requests.post(url + check_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("4.6 Verify user is not able to Add check-account for Payment_ops Company Account with invalid defaultMailingCodeType.")
+parameters = {'defaultMailingCodeType': 'defaultMailingCodeType',
+              'defaultHandlingCodeType': defaultHandlingCodeType,
+              'checkFileName': checkFileName,
+              'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': countryCode,
+              'zipCode': zipCode,
+              'country': country
+              }
+response = requests.post(url + check_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("4.7 Verify user is not able to Add check-account for Payment_ops Company Account with invalid defaultHandlingCodeType.")
+parameters = {'defaultMailingCodeType': defaultMailingCodeType,
+              'defaultHandlingCodeType': 'defaultHandlingCodeType',
+              'checkFileName': checkFileName,
+              'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': countryCode,
+              'zipCode': zipCode,
+              'country': country
               }
 response = requests.post(url + check_account, data=json.dumps(parameters),
                          headers=headers, verify=True)
@@ -287,7 +426,8 @@ print('Payload:\n{}'.format(response.text))
 # Post a particular entity setup
 print("11.1 Verify user is not able to Save a particular entity setup with expired token")
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
-              'defaultPayType': defaultPayType}
+              'defaultPayType': defaultPayType,
+              'settlementType': settlementType1}
 response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -295,16 +435,18 @@ print('Status code: {}'.format(response.status_code))
 
 print("11.2 Verify User without proper permission is not able to Save a particular entity setup")
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
-              'defaultPayType': defaultPayType}
+              'defaultPayType': defaultPayType,
+              'settlementType': settlementType1}
 response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=NoPermission_header, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
-print("11.3 Verify user is not able to Save a particular entity setup with daysToWaitForDisbursement 0")
+print("11.3 Verify user is able to Save a particular entity setup with daysToWaitForDisbursement 0")
 parameters = {'daysToWaitForDisbursement': 0,
-              'defaultPayType': ''}
+              'defaultPayType': defaultPayType,
+              'settlementType': settlementType1}
 response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -313,7 +455,38 @@ print('Payload:\n{}'.format(response.text))
 
 print("11.4 Verify user is not able to Save a particular entity setup without defaultPayType")
 parameters = {'daysToWaitForDisbursement': 10,
-              'defaultPayType': ''}
+              'defaultPayType': '',
+              'settlementType': settlementType1}
+response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("11.4 Verify user is not able to Save a particular entity setup Invalid defaultPayType")
+parameters = {'daysToWaitForDisbursement': 10,
+              'defaultPayType': 'invalid',
+              'settlementType': settlementType1}
+response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("11.5 Verify user is not able to Save a particular entity setup without settlementType")
+parameters = {'daysToWaitForDisbursement': 10,
+              'defaultPayType': defaultPayType,
+              'settlementType': ''}
+response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("11.6 Verify user is not able to Save a particular entity setup with invalid settlementType")
+parameters = {'daysToWaitForDisbursement': 10,
+              'defaultPayType': '',
+              'settlementType': 'invalid'}
 response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))

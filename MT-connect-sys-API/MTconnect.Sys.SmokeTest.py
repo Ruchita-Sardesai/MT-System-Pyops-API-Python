@@ -23,7 +23,8 @@ headers = {'Authorization': 'Bearer ' + tokens['access_token'], 'Content-Type': 
 # Post Default Setup for Company Account API
 print("Post Default Setup for Company Account.")
 parameters = {'defaultNumberOfDaysForDisbursement': defaultNumberOfDaysForDisbursement,
-              'nextCheckNumber': nextCheckNumber}
+              'nextCheckNumber': nextCheckNumber,
+              'settlementType': settlementType1}
 
 response = requests.post(url + default_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
@@ -169,7 +170,8 @@ else:
 # Post a particular entity setup
 print("Save a particular entity setup")
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
-              'defaultPayType': defaultPayType}
+              'defaultPayType': defaultPayType,
+              'settlementType': settlementType1}
 response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Status code: {}'.format(response.request.url))

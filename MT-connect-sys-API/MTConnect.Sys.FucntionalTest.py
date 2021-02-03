@@ -48,7 +48,7 @@ print('Payload:\n{}'.format(response.text))
 
 print("1.3 Verify user is not able to Post Default Setup for Company Account with defaultNumberOfDaysForDisbursement 0")
 parameters = {'defaultNumberOfDaysForDisbursement': 0,
-              'nextCheckNumber': 0,
+              'nextCheckNumber': 11,
               'settlementType': settlementType1}
 response = requests.post(url + default_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)

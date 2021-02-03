@@ -1,9 +1,9 @@
 # Credentials/Input to get the token
 from random import randint
 
-token_url = 'https://identity.dev-regalpay.io/connect/token'
+token_url = 'https://identity.qa-regalpay.io/connect/token'
 Username = 'ruchita@regal-us.com'
-Password = 'Ruchita@12345'
+Password = 'Ruchita@1234'
 client_id = 'MineralTreePaymentsOpsApp'
 client_secret = 'QN9wyWRJPdr2KTYp'
 grant_type = 'password'
@@ -13,7 +13,7 @@ Scope = 'openid mtc-sys:manage:setup'
 random_value = randint(100, 20000000)
 random_value1 = randint(11111, 99999)
 # Urls
-url = 'https://api.dev-regalpay.io/mt-connect-sys/'
+url = 'https://api.qa-regalpay.io/mt-connect-sys/'
 
 company_address = 'company-address'
 card_account = 'card-account'
@@ -27,7 +27,7 @@ default_setup = 'default-setup'
 next_check_number = 'next-check-number'
 entity_setup = 'entity-setup'
 last_batch = 'last-batch'
-Tenant_ID = '3a70dfb8-c21e-4831-2b58-08d8b13da1e5'
+Tenant_ID = 'ea44f097-1775-48ca-aa3e-08d8b17c1e43'
 
 # User Defined Variables
 addressLine1 = 'Regal Regus building'

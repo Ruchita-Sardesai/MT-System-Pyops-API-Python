@@ -150,12 +150,14 @@ response = requests.get(url + 'entities', headers=headers, verify=True)
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 data = json.loads(response.content)
-extracted_id = data['result'][1]['id']
+extracted_id = data['result'][1]["id"]
+# extracted_id = data['result']['id']
 if response.status_code == ExpectedCode1:
     result15 = 'PASS'
 else:
     result15 = 'FAIL'
 
+# extracted_id = 'ea44f097-1775-48ca-aa3e-08d8b17c1e43'
 # Get all entities setup
 print("Get all entities setup")
 response = requests.get(url + 'entity-setups', headers=headers, verify=True)

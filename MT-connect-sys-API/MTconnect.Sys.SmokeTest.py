@@ -172,7 +172,7 @@ print("Save a particular entity setup")
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Status code: {}'.format(response.request.url))
 print('Request body: {} '.format(response.request.body))
@@ -185,7 +185,7 @@ else:
 
 # Get a particular entity setup
 print("Get a particular entity setup")
-response = requests.get(url + extracted_id + '/' + entity_setup, headers=headers, verify=True)
+response = requests.get(url + 'entities/' + extracted_id + '/' + entity_setup, headers=headers, verify=True)
 print('Status code: {}'.format(response.request.url))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))

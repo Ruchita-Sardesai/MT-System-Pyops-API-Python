@@ -397,7 +397,7 @@ print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
 # Get All entities
-response = requests.get(url + 'entities', headers=expired_header, verify=True)
+response = requests.get(url + 'entities', headers=headers, verify=True)
 data = json.loads(response.content)
 extracted_id = data['result'][1]['id']
 
@@ -428,7 +428,7 @@ print("11.1 Verify user is not able to Save a particular entity setup with expir
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url+ 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -437,7 +437,7 @@ print("11.2 Verify User without proper permission is not able to Save a particul
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=NoPermission_header, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -447,7 +447,7 @@ print("11.3 Verify user is able to Save a particular entity setup with daysToWai
 parameters = {'daysToWaitForDisbursement': 0,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -457,7 +457,7 @@ print("11.4 Verify user is not able to Save a particular entity setup without de
 parameters = {'daysToWaitForDisbursement': 10,
               'defaultPayType': '',
               'settlementType': settlementType1}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -467,7 +467,7 @@ print("11.4 Verify user is not able to Save a particular entity setup Invalid de
 parameters = {'daysToWaitForDisbursement': 10,
               'defaultPayType': 'invalid',
               'settlementType': settlementType1}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -477,7 +477,7 @@ print("11.5 Verify user is not able to Save a particular entity setup without se
 parameters = {'daysToWaitForDisbursement': 10,
               'defaultPayType': defaultPayType,
               'settlementType': ''}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -487,7 +487,7 @@ print("11.6 Verify user is not able to Save a particular entity setup with inval
 parameters = {'daysToWaitForDisbursement': 10,
               'defaultPayType': '',
               'settlementType': 'invalid'}
-response = requests.post(url + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -495,19 +495,19 @@ print('Payload:\n{}'.format(response.text))
 
 # Get a particular entity setup
 print("12.1 Verify user is not able to Get a particular entity setup with expired token")
-response = requests.get(url + extracted_id + '/' + entity_setup, headers=expired_header, verify=True)
+response = requests.get(url + 'entities/' + extracted_id + '/' + entity_setup, headers=expired_header, verify=True)
 print('Status code: {}'.format(response.request.url))
 print('Status code: {}'.format(response.status_code))
 
 print("12.2 Verify User without proper permission is not able to Get a particular entity setup")
-response = requests.get(url + extracted_id + '/' + entity_setup,
+response = requests.get(url + 'entities/' + extracted_id + '/' + entity_setup,
                         headers=NoPermission_header, verify=True)
 print('Status code: {}'.format(response.request.url))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
 print("12.3 Verify User is not able to Get a particular entity setup when EntityID is not proper")
-response = requests.get(url + InvalidTenant_ID + '/' + entity_setup, headers=headers, verify=True)
+response = requests.get(url + 'entities/' + InvalidTenant_ID + '/' + entity_setup, headers=headers, verify=True)
 print('Status code: {}'.format(response.request.url))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))

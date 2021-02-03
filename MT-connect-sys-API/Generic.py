@@ -33,11 +33,11 @@ Tenant_ID = '3a70dfb8-c21e-4831-2b58-08d8b13da1e5'
 addressLine1 = 'Regal Regus building'
 addressLine2 = 'Ibis hotel'
 addressLine3 = 'halli pura'
-city = 'Bangalore 1'
-state = 'Karnataka 1'
+city = 'Bangalore one'
+state = 'Karnataka one'
 countryCode = 'IN'
-zipCode = '12345'
-country = 'India 1'
+zipCode = '12345-8965'
+country = 'India one'
 
 nextCheckNumber = random_value
 defaultNumberOfDaysForDisbursement = 5

@@ -76,7 +76,8 @@ print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
-print("1.5 Verify user is not able to Post Default Setup for Company Account with nextCheckNumber less than the current check number")
+print(
+    "1.5 Verify user is not able to Post Default Setup for Company Account with nextCheckNumber less than the current check number")
 parameters = {'defaultNumberOfDaysForDisbursement': 10,
               'nextCheckNumber': 2,
               'settlementType': settlementType1}
@@ -285,7 +286,8 @@ print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
-print("4.6 Verify user is not able to Add check-account for Payment_ops Company Account with invalid defaultMailingCodeType.")
+print(
+    "4.6 Verify user is not able to Add check-account for Payment_ops Company Account with invalid defaultMailingCodeType.")
 parameters = {'defaultMailingCodeType': 'defaultMailingCodeType',
               'defaultHandlingCodeType': defaultHandlingCodeType,
               'checkFileName': checkFileName,
@@ -304,7 +306,8 @@ print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
-print("4.7 Verify user is not able to Add check-account for Payment_ops Company Account with invalid defaultHandlingCodeType.")
+print(
+    "4.7 Verify user is not able to Add check-account for Payment_ops Company Account with invalid defaultHandlingCodeType.")
 parameters = {'defaultMailingCodeType': defaultMailingCodeType,
               'defaultHandlingCodeType': 'defaultHandlingCodeType',
               'checkFileName': checkFileName,
@@ -428,7 +431,7 @@ print("11.1 Verify user is not able to Save a particular entity setup with expir
 parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
-response = requests.post(url+ 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
+response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
@@ -527,9 +530,7 @@ print("14.1 Verify user is not able to Add SFTP Credentials for Company Setup wi
 parameters = {'username': username,
               'password': password,
               'credentialName': credentialName,
-              'checkFileLocation': checkFileLocation,
-              'achFileLocation': achFileLocation,
-              'cardFileLocation': cardFileLocation}
+              'authenticationType': authenticationType}
 response = requests.post(url + add_credentials, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -547,9 +548,7 @@ print("14.3 Verify user is not able to Add SFTP Credentials for Company Setup wi
 parameters = {'username': '',
               'password': '',
               'credentialName': '',
-              'checkFileLocation': '',
-              'achFileLocation': '',
-              'cardFileLocation': ''}
+              'authenticationType': ''}
 response = requests.post(url + add_credentials, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -563,5 +562,229 @@ print('Status code: {}'.format(response.status_code))
 
 print("15.2 Verify User without proper permission is not able to Test SFTP Connection for Company Setup")
 response = requests.post(url + test_connections, headers=NoPermission_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# Remove SSH Keys
+print("16.1 Verify user is not able to Remove SSH Keys for Company Setup with expired token")
+response = requests.delete(url + sftp_shh, headers=expired_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("16.2 Verify User without proper permission is not able to Remove SSH Keys for Company Setup")
+response = requests.post(url + test_connections, headers=NoPermission_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# Remove SSH Keys
+print("16.1 Verify user is not able to Remove SSH Keys for Company Setup with expired token")
+response = requests.delete(url + sftp_shh, headers=expired_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+
+print("16.2 Verify User without proper permission is not able to Remove SSH Keys for Company Setup")
+response = requests.post(url + test_connections, headers=NoPermission_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# Add file location for SFTP
+print("17.1 Verify user is not able to Add file location for SFTP with expired token")
+parameters = {'checkFileLocation': checkFileLocation,
+              'achFileLocation': achFileLocation,
+              'cardFileLocation': cardFileLocation}
+response = requests.post(url + file_location, data=json.dumps(parameters),
+                         headers=expired_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+
+print("17.2 Verify User without proper permission is not able to Add file location for SFTP")
+response = requests.post(url + file_location, data=json.dumps(parameters),
+                         headers=NoPermission_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("17.3 Verify mandatory field validations for Add file location for SFTP")
+parameters = {'checkFileLocation': '',
+              'achFileLocation': '',
+              'cardFileLocation': ''}
+response = requests.post(url + file_location, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# Generate SSH key pairs
+print("18.1 Verify user is not able to Generate SSH key pairs with expired token")
+parameters = {'privateKeyName': privateKeyName}
+response = requests.post(url + sftp_shh, data=json.dumps(parameters),
+                         headers=expired_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+
+print("18.2 Verify User without proper permission is not able to Generate SSH key pairs")
+parameters = {'privateKeyName': privateKeyName}
+response = requests.post(url + sftp_shh, data=json.dumps(parameters),
+                         headers=NoPermission_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("18.3 Verify mandatory field validations for Generate SSH key pairs")
+parameters = {'privateKeyName': ''}
+response = requests.post(url + sftp_shh, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# Api to add sftp for setup.
+print("19.1 Verify user is not able to add sftp for setup. with expired token")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=expired_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+
+print("19.2 Verify User without proper permission is not able to add sftp for setup.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=NoPermission_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("19.3 Verify mandatory field validations for add sftp for setup.")
+parameters = {'host': '',
+              'port': 0,
+              'authenticationType': ''}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("19.4 Verify validation for invalid authenticationType to add sftp for setup.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': 'authenticationType'}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("19.5 Verify validation for invalid host to add sftp for setup.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# Get Public SSH Key
+print("20.1 Verify user is not able to Get Public SSH Key with expired token")
+response = requests.get(url + sftp_shh_public_key, headers=expired_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+
+print("20.2 Verify User without proper permission is not able to Get Public SSH Key")
+response = requests.get(url + sftp_shh_public_key, headers=NoPermission_header, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# GET all payments for particular entity
+print("21.1 Verify user is not able to GET all payments for particular entity with expired token")
+response = requests.get(url + Payments, headers=expired_header, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+
+print(
+    "21.2 Verify User without proper permission is not able to GET a particular payment's details of a particular entity")
+response = requests.get(url + Payments, headers=NoPermission_header, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("21.3 Verify validation for invalid tenantID to GET a particular payment's details of a particular entity")
+response = requests.get(url + 'entities/' + InvalidTenant_ID + '/payments', headers=headers, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# GET a particular payment's details of a particular entity
+response = requests.get(url + Payments, headers=headers, verify=True)
+data = json.loads(response.content)
+extracted_id = data['result'][1]["paymentNumber"]
+transactionNumber = data['result'][1]["transactionNumber"]
+vendorName = data['result'][1]["payeeName"]
+
+print("22.1 Verify user is not able to GET a particular payment's details of a particular entity with expired token")
+response = requests.get(url + Payments + '/' + extracted_id, headers=expired_header, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+
+print(
+    "22.2 Verify User without proper permission is not able to GET a particular payment's details of a particular entity")
+response = requests.get(url + Payments + '/' + extracted_id, headers=NoPermission_header, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("22.3 Verify validation with invalid TenantID to GET a particular payment's details of a particular entity")
+response = requests.get(url + 'entities/' + InvalidTenant_ID + '/payments/' + extracted_id, headers=headers,
+                        verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+
+print("22.4 Verify validation with invalid PaymentNo to GET a particular payment's details of a particular entity")
+response = requests.get(url + Payments + '/' + '123', headers=headers, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+# GET payments based on search filter: vendor Name
+print("23.1 Verify user is not able to GET payments based on search filter with expired token")
+parameters = {'vendorName': vendorName}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=expired_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+
+print("23.2 Verify User without proper permission is not able to GET payments based on search filter")
+parameters = {'vendorName': vendorName}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=NoPermission_header, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("23.3 Verify mandatory field validations for GET payments based on search filter")
+parameters = {'vendorName': '',
+              'paymentStatus': [],
+              'paymentType': '',
+              'transactionNumber': '',
+              'paymentStartDate': '',
+              'paymentEndDate': '',
+              'clearedDateStart': '',
+              'clearedDateEnd': ''
+              }
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))

@@ -198,7 +198,7 @@ else:
 
 # Remove SFTP Credentials for Company Setup
 print("Remove SFTP Credentials for Company Setup")
-response = requests.post(url + remove_credentials, headers=headers, verify=True)
+response = requests.delete(url + remove_credentials, headers=headers, verify=True)
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 if response.status_code == ExpectedCode1:
@@ -206,14 +206,21 @@ if response.status_code == ExpectedCode1:
 else:
     result13 = 'FAIL'
 
+# Remove SSH Keys
+print("Remove SSH Keys")
+response = requests.delete(url + sftp_shh, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result27 = 'PASS'
+else:
+    result27 = 'FAIL'
+
 # Add SFTP Credentials for Company Setup
 print("Add SFTP Credentials for Company Setup")
 parameters = {'username': username,
               'password': password,
-              'credentialName': credentialName,
-              'checkFileLocation': checkFileLocation,
-              'achFileLocation': achFileLocation,
-              'cardFileLocation': cardFileLocation}
+              'credentialName': credentialName}
 response = requests.post(url + add_credentials, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -223,6 +230,59 @@ if response.status_code == ExpectedCode:
     result12 = 'PASS'
 else:
     result12 = 'FAIL'
+
+# Add file location for SFTP
+print("Add file location for SFTP")
+parameters = {'checkFileLocation': checkFileLocation,
+              'achFileLocation': achFileLocation,
+              'cardFileLocation': cardFileLocation}
+response = requests.post(url + file_location, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result19 = 'PASS'
+else:
+    result19 = 'FAIL'
+
+# Generate SSH key pairs
+print("Generate SSH key pairs")
+parameters = {'privateKeyName': privateKeyName}
+response = requests.post(url + sftp_shh, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result26 = 'PASS'
+else:
+    result26 = 'FAIL'
+
+# Api to add sftp for setup.
+print("Api to add sftp for setup.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result28 = 'PASS'
+else:
+    result28 = 'FAIL'
+
+# Get Public SSH Key
+print("Get Public SSH Key")
+response = requests.get(url + sftp_shh_public_key, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result29 = 'PASS'
+else:
+    result29 = 'FAIL'
 
 # Test SFTP Connection for Company Setup
 print("Test SFTP Connection for Company Setup")
@@ -234,6 +294,122 @@ if response.status_code == ExpectedCode1:
 else:
     result14 = 'FAIL'
 
+# GET all payments for particular entity
+print("GET all payments for particular entity")
+response = requests.get(url + Payments, headers=headers, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+data = json.loads(response.content)
+extracted_id = data['result'][1]["paymentNumber"]
+transactionNumber = data['result'][1]["transactionNumber"]
+vendorName = data['result'][1]["payeeName"]
+if response.status_code == ExpectedCode1:
+    result17 = 'PASS'
+else:
+    result17 = 'FAIL'
+
+# GET a particular payment's details of a particular entity
+print("GET a particular payment's details of a particular entity")
+response = requests.get(url + Payments + '/' + extracted_id, headers=headers, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result18 = 'PASS'
+else:
+    result18 = 'FAIL'
+
+
+# GET payments based on search filter : paymentStatus
+print("GET payments based on search filter: paymentStatus")
+parameters = {'paymentStatus': [paymentStatus]}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result16 = 'PASS'
+else:
+    result16 = 'FAIL'
+
+
+# GET payments based on search filter: vendor Name
+print("GET payments based on search filter")
+parameters = {'vendorName': vendorName}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result21 = 'PASS'
+else:
+    result21 = 'FAIL'
+
+# GET payments based on search filter: paymentType
+print("GET payments based on search filter")
+parameters = {'paymentType': paymentType}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result22 = 'PASS'
+else:
+    result22 = 'FAIL'
+
+# GET payments based on search filter: transactionNumber
+print("GET payments based on search filter : transactionNumber")
+parameters = {'transactionNumber': transactionNumber}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result23 = 'PASS'
+else:
+    result23 = 'FAIL'
+
+# GET payments based on search filter: paymentDates
+print("GET payments based on search filter : paymentDates")
+parameters = {'paymentStartDate': start_date,
+              'paymentEndDate': end_date}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result24 = 'PASS'
+else:
+    result24 = 'FAIL'
+
+# GET payments based on search filter: ClearedDates
+print("GET payments based on search filter : ClearedDates")
+parameters = {'clearedDateStart': start_date,
+              'clearedDateEnd': end_date}
+response = requests.post(url + Payment_search, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result25 = 'PASS'
+else:
+    result25 = 'FAIL'
+
 print("Add Address for Company Account API: " + result1)
 print("Add Card-account for Company Account: " + result2)
 print("Add Check-account for Company Account: " + result3)
@@ -242,10 +418,29 @@ print("View Setup Details: " + result5)
 print("Post Default Setup for Company Account API: " + result6)
 print("Get next_check_number form a default Company Account: " + result7)
 print("Get next_Batch_number form a default Company Account: " + result8)
+
+print("Get all entities: " + result15)
 print("Get all entities setup: " + result9)
 print("Get a particular entity setup: " + result10)
 print("Save a particular entity setup: " + result11)
+
 print("Add SFTP Credentials for Company Setup: " + result12)
+print("Add file location for SFTP: " + result19)
 print("Remove SFTP Credentials for Company Setup: " + result13)
 print("Test SFTP Connection for Company Setup: " + result14)
-print("Get all entities: " + result15)
+print("Generate SSH key pairs:  " + result26)
+print("Api to add sftp for setup: " + result28)
+print("Get Public SSH Key:  " + result29)
+print("Remove SSH Keys:  " + result27)
+
+
+print("GET all payments for particular entity: " + result17)
+print("GET a particular payment's details of a particular entity: " + result18)
+
+print("GET payments based on search filter: paymentStatus  " + result16)
+print("GET payments based on search filter: vendor Name: " + result21)
+print("GET payments based on search filter: paymentType: " + result22)
+print("GET payments based on search filter: transactionNumber: " + result23)
+print("GET payments based on search filter: paymentDates: " + result24)
+print("GET payments based on search filter: ClearedDates: " + result25)
+

@@ -15,6 +15,7 @@ random_value1 = randint(11111, 99999)
 # Urls
 url = 'https://api.dev-regalpay.io/mt-connect-sys/'
 
+transactions = '/transactions'
 company_address = 'company-address'
 card_account = 'card-account'
 ach_account = 'ach-account'
@@ -31,10 +32,10 @@ Tenant_ID = '3a70dfb8-c21e-4831-2b58-08d8b13da1e5'
 
 # User Defined Variables
 addressLine1 = 'Regal Regus building'
-addressLine2 = 'Ibis hotel'
-addressLine3 = 'halli pura'
-city = 'Bangalore one'
-state = 'Karnataka one'
+addressLine2 = 'riverbay'
+addressLine3 = 'church street'
+city = 'provision house'
+state = 'lakeview end'
 countryCode = 'IN'
 zipCode = '12345-8965'
 country = 'India one'
@@ -69,6 +70,15 @@ credentialName = 'credentialName'
 checkFileLocation = 'checkFileLocation'
 achFileLocation = 'achFileLocation'
 cardFileLocation = 'cardFileLocation'
+
+SingleTransactionReportType = '1'
+CustomTransactionVolume = '2'
+DuplicatePayments = '3'
+FlaggedTransactions = '4'
+NonUSDPayments = '5'
+
+amount = '100.00'
+null = 'null'
 
 ExpectedCode = 201
 ExpectedCode1 = 200

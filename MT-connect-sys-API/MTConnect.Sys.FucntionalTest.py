@@ -565,3 +565,106 @@ print("15.2 Verify User without proper permission is not able to Test SFTP Conne
 response = requests.post(url + test_connections, headers=NoPermission_header, verify=True)
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
+
+
+# Get Transaction Report
+
+print("GET Reports of Payments with report type: SingleTransactionReportType")
+parameters = {'reportType': SingleTransactionReportType,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+print("GET Reports of Payments with report type: CustomTransactionVolume")
+parameters = {'reportType': CustomTransactionVolume,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+print("GET Reports of Payments with report type: DuplicatePayments")
+parameters = {'reportType': DuplicatePayments,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+print("GET Reports of Payments with report type:FlaggedTransactions ")
+parameters = {'reportType': FlaggedTransactions,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+print("GET Reports of Payments with report type:NonUSDPayments ")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+print("Verify User NOT able to GET Reports of Payments without Mandatory field ")
+parameters = {'reportType': '',
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+# If Fromdate is present and ToDate is null ->
+print("GET Reports of Payments with report type: Fromdate is present and ToDate is null")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': null,
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+# If Fromdate is null and ToDate is present ->
+print("GET Reports of Payments with report type: Fromdate is null and ToDate is present")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': null,
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+
+print("GET Reports of Payments with report type: Fromdate is null and ToDate is null")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': null,
+              'fromDate': null,
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+
+print("GET Reports of Payments with report type: amount is null")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': null,
+              'fromDate': null,
+              'threshold': null}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters), verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))

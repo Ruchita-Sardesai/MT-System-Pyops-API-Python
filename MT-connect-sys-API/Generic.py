@@ -1,10 +1,14 @@
 # Credentials/Input to get the token
 from datetime import datetime
 from random import randint
-
-token_url = 'https://identity.dev-regalpay.io/connect/token'
+#
+# TOKEN_URL = 'https://identity.qa-regalpay.io/connect/token'
+# USERNAME = 'chethan@regal-us.com'
+# PASSWORD = 'Chethan@1995'
+# ACR_VALUES
+token_url = 'https://identity.qa-regalpay.io/connect/token'
 Username = 'ruchita@regal-us.com'
-Password = 'Ruchita@12345'
+Password = 'Ruchita@1234'
 client_id = 'MineralTreePaymentsOpsApp'
 client_secret = 'QN9wyWRJPdr2KTYp'
 grant_type = 'password'
@@ -14,7 +18,7 @@ Scope = 'openid mtc-sys:manage:setup mtc-sys:view:payments rps-sys:manage:compan
 random_value = randint(100, 20000)
 random_value1 = randint(11111, 99999)
 # Urls
-url1 = 'https://api.dev-regalpay.io'
+url1 = 'https://api.qa-regalpay.io'
 url = url1 + '/mt-connect-sys/'
 
 company_address = 'company-address'
@@ -28,14 +32,18 @@ test_connections = 'sftp/test-connection'
 default_setup = 'default-setup'
 next_check_number = 'next-check-number'
 entity_setup = 'entity-setup'
-last_batch = 'last-batch'
+next_batch_number = 'next-batch-number'
+next_settlement_transaction_id = 'next-settlement-transaction-id'
 sftp = 'sftp'
 sftp_shh = 'sftp/ssh'
 sftp_shh_public_key = 'sftp/ssh/public-key'
 file_location = 'sftp/file-location'
+payment_status = 'payment-status'
+current_date = 'batches/currentdate'
+batch_status = '/batch-status'
 
 # Tenant_ID = 'ea44f097-1775-48ca-aa3e-08d8b17c1e43'
-Tenant_ID = '37c25830-0de9-461e-2b6c-08d8b13da1e5'
+Tenant_ID = '1b0af61c-cf15-4f01-69c7-08d8c82a1bb6'
 Payment_search = 'entities/' + Tenant_ID + '/payments/search-parameter'
 Payments = 'entities/' + Tenant_ID + '/payments'
 
@@ -63,30 +71,31 @@ defaultHandlingCodeType = 'FedexToPayee'
 checkFileName = 'checkFileName'
 
 fileName = 'fileName'
-immediateDestination = 'immediateDestination'
-immediateDestinationName = 'immediateDestinationName'
-immediateOrigin = '695328'
-immediateOriginName = '123456'
-companyId = 'companyId'
-formatCode = 'PPD'
-
-daysToWaitForDisbursement = 5
-defaultPayType = 'Check'
+immediateDestination = 'imDesti998'
+immediateDestinationName = 'iDeN89856'
+immediateOrigin = 'Ior695328'
+immediateOriginName = 'ION123456'
+companyId = '56companyId'
+formatCode = 'CCD'
+originatingDFIId = 'ODFID45'
 
 username = 'admin'
 password = 'Atlanta2009!'
 credentialName = 'credentialName'
-checkFileLocation = 'checkFileLocation'
-achFileLocation = 'achFileLocation'
-cardFileLocation = 'cardFileLocation'
-authenticationType = 'PrivateKey'
+checkFileLocation = '/regal-partners/QAtest/CHEK'
+achFileLocation = '/regal-partners/QAtest/ACH'
+cardFileLocation = '/regal-partners/QAtest/CARD'
+authenticationType1 = 'PrivateKey'
+authenticationType2 = 'Password'
+authenticationType3 = 'PrivateKeyAndPassword'
+
 privateKeyName = 'privateKeyName'
-host = 'https://ec2-35-153-232-70.compute-1.amazonaws.com'
-port = '500'
+host = 's-cb0b6465fd3448908.server.transfer.us-east-2.amazonaws.com'
+port = '22'
 
 paymentStatus = 'UnConfirmed'
-
-paymentType = 'MTCHK'
+defaultPayType = 'ACH'
+paymentType = 'Card'
 # start_date = datetime. date(2016, 1, 1)
 # end_date = datetime. date(2021, 2, 1)
 

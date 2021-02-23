@@ -334,7 +334,8 @@ parameters = {'fileName': fileName,
               'immediateOrigin': immediateOrigin,
               'immediateOriginName': immediateOriginName,
               'companyId': companyId,
-              'formatCode': formatCode}
+              'formatCode': formatCode,
+              'originatingDFIId': originatingDFIId}
 response = requests.post(url + ach_account, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -348,7 +349,8 @@ parameters = {'fileName': fileName,
               'immediateOrigin': immediateOrigin,
               'immediateOriginName': immediateOriginName,
               'companyId': companyId,
-              'formatCode': formatCode}
+              'formatCode': formatCode,
+              'originatingDFIId': originatingDFIId}
 response = requests.post(url + ach_account, data=json.dumps(parameters),
                          headers=NoPermission_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -362,7 +364,8 @@ parameters = {'fileName': '',
               'immediateOrigin': '',
               'immediateOriginName': '',
               'companyId': '',
-              'formatCode': ''}
+              'formatCode': '',
+              'originatingDFIId': originatingDFIId}
 response = requests.post(url + ach_account, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -391,11 +394,11 @@ print('Payload:\n{}'.format(response.text))
 
 # Get next_Batch_number form a default Company Account
 print("8.1 Verify user is not able to Get next_Batch_number form a default Company Account with expired token")
-response = requests.get(url + last_batch, headers=expired_header, verify=True)
+response = requests.get(url + next_batch_number, headers=expired_header, verify=True)
 print('Status code: {}'.format(response.status_code))
 
 print("8.2 Verify User without proper permission is not able to Get next_Batch_number form a default Company Account.")
-response = requests.get(url + last_batch, headers=NoPermission_header, verify=True)
+response = requests.get(url + next_batch_number, headers=NoPermission_header, verify=True)
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
@@ -428,7 +431,7 @@ print('Payload:\n{}'.format(response.text))
 
 # Post a particular entity setup
 print("11.1 Verify user is not able to Save a particular entity setup with expired token")
-parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
+parameters = {'daysToWaitForDisbursement': defaultNumberOfDaysForDisbursement,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
 response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
@@ -437,7 +440,7 @@ print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 
 print("11.2 Verify User without proper permission is not able to Save a particular entity setup")
-parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
+parameters = {'daysToWaitForDisbursement': defaultNumberOfDaysForDisbursement,
               'defaultPayType': defaultPayType,
               'settlementType': settlementType1}
 response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
@@ -530,7 +533,7 @@ print("14.1 Verify user is not able to Add SFTP Credentials for Company Setup wi
 parameters = {'username': username,
               'password': password,
               'credentialName': credentialName,
-              'authenticationType': authenticationType}
+              'authenticationType': authenticationType2}
 response = requests.post(url + add_credentials, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -641,7 +644,7 @@ print('Payload:\n{}'.format(response.text))
 print("19.1 Verify user is not able to add sftp for setup. with expired token")
 parameters = {'host': host,
               'port': port,
-              'authenticationType': authenticationType}
+              'authenticationType': authenticationType2}
 response = requests.post(url + sftp, data=json.dumps(parameters),
                          headers=expired_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -650,7 +653,7 @@ print('Status code: {}'.format(response.status_code))
 print("19.2 Verify User without proper permission is not able to add sftp for setup.")
 parameters = {'host': host,
               'port': port,
-              'authenticationType': authenticationType}
+              'authenticationType': authenticationType2}
 response = requests.post(url + sftp, data=json.dumps(parameters),
                          headers=NoPermission_header, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -670,7 +673,7 @@ print('Payload:\n{}'.format(response.text))
 print("19.4 Verify validation for invalid authenticationType to add sftp for setup.")
 parameters = {'host': host,
               'port': port,
-              'authenticationType': 'authenticationType'}
+              'authenticationType': 'authenticationType2'}
 response = requests.post(url + sftp, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -680,7 +683,7 @@ print('Payload:\n{}'.format(response.text))
 print("19.5 Verify validation for invalid host to add sftp for setup.")
 parameters = {'host': host,
               'port': port,
-              'authenticationType': authenticationType}
+              'authenticationType': authenticationType2}
 response = requests.post(url + sftp, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.url))

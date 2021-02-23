@@ -24,7 +24,8 @@ headers = {'Authorization': 'Bearer ' + tokens['access_token'], 'Content-Type': 
 print("Post Default Setup for Company Account.")
 parameters = {'defaultNumberOfDaysForDisbursement': defaultNumberOfDaysForDisbursement,
               'nextCheckNumber': nextCheckNumber,
-              'settlementType': settlementType1}
+              'settlementType': settlementType1,
+              'defaultPayType': defaultPayType}
 
 response = requests.post(url + default_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
@@ -103,7 +104,8 @@ parameters = {'fileName': fileName,
               'immediateOrigin': immediateOrigin,
               'immediateOriginName': immediateOriginName,
               'companyId': companyId,
-              'formatCode': formatCode}
+              'formatCode': formatCode,
+              'originatingDFIId': originatingDFIId}
 response = requests.post(url + ach_account, data=json.dumps(parameters),
                          headers=headers, verify=True)
 print('Request body: {} '.format(response.request.body))
@@ -136,13 +138,33 @@ else:
 
 # Get next_Batch_number form a default Company Account
 print("Get next_Batch_number form a default Company Account")
-response = requests.get(url + last_batch, headers=headers, verify=True)
+response = requests.get(url + next_batch_number, headers=headers, verify=True)
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 if response.status_code == ExpectedCode1:
     result8 = 'PASS'
 else:
     result8 = 'FAIL'
+
+# Get next_settlement_transaction_id form a default Company Account
+print("Get next_settlement_transaction_id form a default Company Account")
+response = requests.get(url + next_settlement_transaction_id, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result26 = 'PASS'
+else:
+    result26 = 'FAIL'
+
+# Api to get Batches by current date
+print("Api to get Batches by current date")
+response = requests.get(url + current_date, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result30 = 'PASS'
+else:
+    result30 = 'FAIL'
 
 # Get All entities
 print("Get all entities")
@@ -171,8 +193,8 @@ else:
 
 # Post a particular entity setup
 print("Save a particular entity setup")
-parameters = {'daysToWaitForDisbursement': daysToWaitForDisbursement,
-              'defaultPayType': defaultPayType,
+parameters = {'daysToWaitForDisbursement': defaultNumberOfDaysForDisbursement,
+              'defaultPayType': paymentType,
               'settlementType': settlementType1}
 response = requests.post(url + 'entities/' + extracted_id + '/' + entity_setup, data=json.dumps(parameters),
                          headers=headers, verify=True)
@@ -196,15 +218,43 @@ if response.status_code == ExpectedCode1:
 else:
     result10 = 'FAIL'
 
-# Remove SFTP Credentials for Company Setup
-print("Remove SFTP Credentials for Company Setup")
-response = requests.delete(url + remove_credentials, headers=headers, verify=True)
+# Api to add sftp for setup with PrivateKey authenticationType1.
+print("Api to add sftp for setup with PrivateKey authenticationType1.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType1}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result28 = 'PASS'
+else:
+    result28 = 'FAIL'
+
+# Generate SSH key pairs
+print("Generate SSH key pairs")
+parameters = {'privateKeyName': privateKeyName}
+response = requests.post(url + sftp_shh, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result26 = 'PASS'
+else:
+    result26 = 'FAIL'
+
+# Get Public SSH Key
+print("Get Public SSH Key")
+response = requests.get(url + sftp_shh_public_key, headers=headers, verify=True)
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 if response.status_code == ExpectedCode1:
-    result13 = 'PASS'
+    result29 = 'PASS'
 else:
-    result13 = 'FAIL'
+    result29 = 'FAIL'
 
 # Remove SSH Keys
 print("Remove SSH Keys")
@@ -215,6 +265,21 @@ if response.status_code == ExpectedCode1:
     result27 = 'PASS'
 else:
     result27 = 'FAIL'
+
+# Api to add sftp for setup with Password authenticationType2.
+print("Api to add sftp for setup with Password authenticationType2.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType2}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result31 = 'PASS'
+else:
+    result31 = 'FAIL'
 
 # Add SFTP Credentials for Company Setup
 print("Add SFTP Credentials for Company Setup")
@@ -231,6 +296,7 @@ if response.status_code == ExpectedCode:
 else:
     result12 = 'FAIL'
 
+
 # Add file location for SFTP
 print("Add file location for SFTP")
 parameters = {'checkFileLocation': checkFileLocation,
@@ -246,43 +312,6 @@ if response.status_code == ExpectedCode1:
 else:
     result19 = 'FAIL'
 
-# Generate SSH key pairs
-print("Generate SSH key pairs")
-parameters = {'privateKeyName': privateKeyName}
-response = requests.post(url + sftp_shh, data=json.dumps(parameters),
-                         headers=headers, verify=True)
-print('Request body: {} '.format(response.request.body))
-print('Status code: {}'.format(response.status_code))
-print('Payload:\n{}'.format(response.text))
-if response.status_code == ExpectedCode:
-    result26 = 'PASS'
-else:
-    result26 = 'FAIL'
-
-# Api to add sftp for setup.
-print("Api to add sftp for setup.")
-parameters = {'host': host,
-              'port': port,
-              'authenticationType': authenticationType}
-response = requests.post(url + sftp, data=json.dumps(parameters),
-                         headers=headers, verify=True)
-print('Request body: {} '.format(response.request.body))
-print('Status code: {}'.format(response.status_code))
-print('Payload:\n{}'.format(response.text))
-if response.status_code == ExpectedCode:
-    result28 = 'PASS'
-else:
-    result28 = 'FAIL'
-
-# Get Public SSH Key
-print("Get Public SSH Key")
-response = requests.get(url + sftp_shh_public_key, headers=headers, verify=True)
-print('Status code: {}'.format(response.status_code))
-print('Payload:\n{}'.format(response.text))
-if response.status_code == ExpectedCode1:
-    result29 = 'PASS'
-else:
-    result29 = 'FAIL'
 
 # Test SFTP Connection for Company Setup
 print("Test SFTP Connection for Company Setup")
@@ -294,6 +323,31 @@ if response.status_code == ExpectedCode1:
 else:
     result14 = 'FAIL'
 
+# Remove SFTP Credentials for Company Setup
+print("Remove SFTP Credentials for Company Setup")
+response = requests.delete(url + remove_credentials, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result13 = 'PASS'
+else:
+    result13 = 'FAIL'
+
+# Api to add sftp for setup with PrivateKeyAndPassword authenticationType3.
+print("Api to add sftp for setup with PrivateKeyAndPassword authenticationType3.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType3}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result32 = 'PASS'
+else:
+    result32 = 'FAIL'
+
 # GET all payments for particular entity
 print("GET all payments for particular entity")
 response = requests.get(url + Payments, headers=headers, verify=True)
@@ -302,9 +356,10 @@ print('Request body: {} '.format(response.request.body))
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 data = json.loads(response.content)
-extracted_id = data['result'][1]["paymentNumber"]
-transactionNumber = data['result'][1]["transactionNumber"]
-vendorName = data['result'][1]["payeeName"]
+extracted_id = data['result'][3]["paymentNumber"]
+transactionNumber = data['result'][3]["transactionNumber"]
+vendorName = data['result'][3]["payeeName"]
+# paymentFileName = data['result'][3]["paymentFileName"]
 if response.status_code == ExpectedCode1:
     result17 = 'PASS'
 else:
@@ -322,6 +377,20 @@ if response.status_code == ExpectedCode1:
 else:
     result18 = 'FAIL'
 
+# Update Payment Status for Batch Payment
+print("Update Payment Status for Batch Payment")
+parameters = {'paymentFileName': 'paymentFileName',
+              'status': 1}
+response = requests.get(url + Payments + '/' + extracted_id + payment_status, data=json.dumps(parameters),
+                        headers=headers, verify=True)
+print('Request body: {} '.format(response.request.url))
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result34 = 'PASS'
+else:
+    result34 = 'FAIL'
 
 # GET payments based on search filter : paymentStatus
 print("GET payments based on search filter: paymentStatus")
@@ -418,24 +487,30 @@ print("View Setup Details: " + result5)
 print("Post Default Setup for Company Account API: " + result6)
 print("Get next_check_number form a default Company Account: " + result7)
 print("Get next_Batch_number form a default Company Account: " + result8)
+print("Get next_settlement_transaction_id form a default Company Account: " + result26)
 
 print("Get all entities: " + result15)
 print("Get all entities setup: " + result9)
 print("Get a particular entity setup: " + result10)
 print("Save a particular entity setup: " + result11)
 
+
+print("Api to add sftp for setup with PrivateKey authenticationType1: " + result28)
+print("Generate SSH key pairs:  " + result26)
+print("Get Public SSH Key:  " + result29)
+print("Remove SSH Keys:  " + result27)
+
+print("Api to add sftp for setup with Password authenticationType2.: " + result31)
 print("Add SFTP Credentials for Company Setup: " + result12)
 print("Add file location for SFTP: " + result19)
 print("Remove SFTP Credentials for Company Setup: " + result13)
 print("Test SFTP Connection for Company Setup: " + result14)
-print("Generate SSH key pairs:  " + result26)
-print("Api to add sftp for setup: " + result28)
-print("Get Public SSH Key:  " + result29)
-print("Remove SSH Keys:  " + result27)
 
+print("Api to add sftp for setup with PrivateKeyAndPassword authenticationType3: " + result32)
 
 print("GET all payments for particular entity: " + result17)
 print("GET a particular payment's details of a particular entity: " + result18)
+print("Update Payment Status for Batch Payment: " + result34)
 
 print("GET payments based on search filter: paymentStatus  " + result16)
 print("GET payments based on search filter: vendor Name: " + result21)
@@ -443,4 +518,7 @@ print("GET payments based on search filter: paymentType: " + result22)
 print("GET payments based on search filter: transactionNumber: " + result23)
 print("GET payments based on search filter: paymentDates: " + result24)
 print("GET payments based on search filter: ClearedDates: " + result25)
+
+print("Api to get Batches by current date" + result30)
+
 

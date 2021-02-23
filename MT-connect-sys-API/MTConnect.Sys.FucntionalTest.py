@@ -566,9 +566,7 @@ response = requests.post(url + test_connections, headers=NoPermission_header, ve
 print('Status code: {}'.format(response.status_code))
 print('Payload:\n{}'.format(response.text))
 
-
 # Get Transaction Report
-
 print("GET Reports of Payments with report type: SingleTransactionReportType")
 parameters = {'reportType': SingleTransactionReportType,
               'toDate': "2021-02-23T05:22:34.699Z",

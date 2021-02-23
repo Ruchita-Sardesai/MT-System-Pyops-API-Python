@@ -479,6 +479,121 @@ if response.status_code == ExpectedCode1:
 else:
     result25 = 'FAIL'
 
+
+# Get Payment Transactions
+print("GET Reports of Payments with report type: SingleTransactionReportType")
+parameters = {'reportType': SingleTransactionReportType,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result35 = 'PASS'
+else:
+    result35 = 'FAIL'
+
+
+print("GET Reports of Payments with report type: CustomTransactionVolume")
+parameters = {'reportType': CustomTransactionVolume,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result36 = 'PASS'
+else:
+    result36 = 'FAIL'
+
+
+print("GET Reports of Payments with report type: DuplicatePayments")
+parameters = {'reportType': DuplicatePayments,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result37 = 'PASS'
+else:
+    result37 = 'FAIL'
+
+
+print("GET Reports of Payments with report type:FlaggedTransactions ")
+parameters = {'reportType': FlaggedTransactions,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result38 = 'PASS'
+else:
+    result38 = 'FAIL'
+
+
+print("GET Reports of Payments with report type:NonUSDPayments ")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result39 = 'PASS'
+else:
+    result39 = 'FAIL'
+
+print("Verify User NOT able to GET Reports of Payments without Mandatory field ")
+parameters = {'reportType': '',
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result40 = 'PASS'
+else:
+    result40 = 'FAIL'
+
+
+#If Fromdate is null and ToDate is present ->
+print("GET Reports of Payments with report type: Fromdate is null and ToDate is present")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': "2021-02-23T05:22:34.699Z",
+              'fromDate': null,
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result41 = 'PASS'
+else:
+    result41 = 'FAIL'
+
+#If Fromdate is present and ToDate is null ->
+print("GET Reports of Payments with report type: Fromdate is present and ToDate is null")
+parameters = {'reportType': NonUSDPayments,
+              'toDate': null,
+              'fromDate': "2021-02-23T05:22:34.699Z",
+              'threshold': amount}
+response = requests.post(url + transactions, headers=headers, data=json.dumps(parameters) ,verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result42 = 'PASS'
+else:
+    result42 = 'FAIL'
+
+
+
 print("Add Address for Company Account API: " + result1)
 print("Add Card-account for Company Account: " + result2)
 print("Add Check-account for Company Account: " + result3)
@@ -521,4 +636,11 @@ print("GET payments based on search filter: ClearedDates: " + result25)
 
 print("Api to get Batches by current date" + result30)
 
-
+print("GET Reports of Payments with report type: SingleTransactionReportType: " + result35)
+print("GET Reports of Payments with report type: CustomTransactionVolume: " + result36)
+print("GET Reports of Payments with report type: DuplicatePayments: " + result37)
+print("GET Reports of Payments with report type:FlaggedTransactions: " + result38)
+print("GET Reports of Payments with report type:NonUSDPayments: " + result39)
+print("Verify User NOT able to GET Reports of Payments without Mandatory field : " + result40)
+print("GET Reports of Payments with report type: Fromdate is null and ToDate is present: " + result41)
+print("GET Reports of Payments with report type: Fromdate is present and ToDate is present: " + result42)

@@ -568,4 +568,28 @@ print('Payload:\n{}'.format(response.text))
 
 
 
+# POST Update Disbursement Filename for payment
+print("POST Update Disbursement Filename for payment")
+parameters = {
+[
+  {
+    "fileName": "DisbursedFileName" + random_value1,
+    "paymentNumbers": [
+       paymentNumber2
+    ]
+  }
+]
+}
+response = requests.post(url + Disbursement_PaymentsFilename, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Request body: {} '.format(response.request.url))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result35 = 'PASS'
+else:
+    result35 = 'FAIL'
+
+
 

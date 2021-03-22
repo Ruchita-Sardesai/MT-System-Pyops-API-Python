@@ -2,7 +2,6 @@
 from datetime import datetime
 from random import randint
 
-token_url = 'https://identity.dev-regalpay.io/connect/token'
 #
 # TOKEN_URL = 'https://identity.qa-regalpay.io/connect/token'
 # USERNAME = 'chethan@regal-us.com'
@@ -10,19 +9,17 @@ token_url = 'https://identity.dev-regalpay.io/connect/token'
 # ACR_VALUES
 token_url = 'https://identity.qa-regalpay.io/connect/token'
 Username = 'ruchita@regal-us.com'
-Password = 'Ruchita@12345'
+Password = 'Ruchita@1234'
 client_id = 'MineralTreePaymentsOpsApp'
 client_secret = 'QN9wyWRJPdr2KTYp'
 grant_type = 'password'
-Scope = 'openid mtc-sys:manage:setup'
 Scope = 'openid mtc-sys:manage:setup mtc-sys:view:payments rps-sys:manage:company-configuration mtc-sys:manage:payments'
 
 #
 random_value = randint(100, 20000000)
-random_value = randint(100, 20000)
 random_value1 = randint(11111, 99999)
+
 # Urls
-url = 'https://api.dev-regalpay.io/mt-connect-sys/'
 url1 = 'https://api.qa-regalpay.io'
 url = url1 + '/mt-connect-sys/'
 
@@ -32,49 +29,74 @@ card_account = 'card-account'
 ach_account = 'ach-account'
 check_account = 'check-account'
 setup = 'setup'
-add_credentials = 'add-credentials'
-remove_credentials = 'remove-credentials'
-test_connections = 'test-connection'
+entity_setups = 'entity-setups'
+entities = 'entities'
+
 add_credentials = 'sftp/add-credentials'
 remove_credentials = 'sftp/remove-credentials'
 test_connections = 'sftp/test-connection'
 default_setup = 'default-setup'
 next_check_number = 'next-check-number'
-entity_setup = 'entity-setup'
+
 last_batch = 'last-batch'
-Tenant_ID = '3a70dfb8-c21e-4831-2b58-08d8b13da1e5'
 next_batch_number = 'next-batch-number'
 next_settlement_transaction_id = 'next-settlement-transaction-id'
 sftp = 'sftp'
 sftp_shh = 'sftp/ssh'
 sftp_shh_public_key = 'sftp/ssh/public-key'
 file_location = 'sftp/file-location'
-payment_status = 'payment-status'
+payment_status = 'payment-upload-status'
 current_date = 'batches/currentdate'
 batch_status = '/batch-status'
 
-# Tenant_ID = 'ea44f097-1775-48ca-aa3e-08d8b17c1e43'
-Tenant_ID = '1b0af61c-cf15-4f01-69c7-08d8c82a1bb6'
-Payment_search = 'entities/' + Tenant_ID + '/payments/search-parameter'
-Payments = 'entities/' + Tenant_ID + '/payments'
+
+entity_setup = '/entity-setup'
+Payment_search = '/search-parameter'
+Payments ='/payments'
+Disbursement_PaymentsFilename = '/disbursement-filename'
+Refund_PaymentsFilename = '/refund-filename'
+Payments_transactions = '/transactions'
+Refund_Payments = '/refund'
+Retry_Payments = '/retry'
+
+Paytype_ACH = 'ACH'
+Paytype_CARD = 'CARD'
+Paytype_CHECK = 'CHECK'
+
+
+ExpectedCode = 201
+ExpectedCode1 = 200
 
 # User Defined Variables
 addressLine1 = 'Regal Regus building'
+addressLine2 = 'riverbay'
+addressLine3 = 'church street'
+city = 'provision house'
+state = 'lakeview end'
+countryCode = 'IN'
+zipCode = '12345-8965'
+country = 'India one'
+
+nextCheckNumber = '5'
+defaultNumberOfDaysForDisbursement = 5
+settlementType1 = 'Batch'
+settlementType2 = 'Payment'
+
+fundingAlias = 'fundingAlias'
+defaultCardValidity = '60'
+cardType = 'SingleUse'
+
+defaultMailingCodeType = 'MailUSPStoPayee'
+defaultHandlingCodeType = 'FedexToPayee'
 checkFileName = 'checkFileName'
 
 fileName = 'fileName'
-immediateDestination = 'immediateDestination'
-immediateDestinationName = 'immediateDestinationName'
-immediateOrigin = '695328'
-immediateOriginName = '123456'
-companyId = 'companyId'
-formatCode = 'PPD'
 
 daysToWaitForDisbursement = 5
-defaultPayType = 'Check'
 immediateDestination = 'imDesti998'
 immediateDestinationName = 'iDeN89856'
 immediateOrigin = 'Ior695328'
+
 immediateOriginName = 'ION123456'
 companyId = '56companyId'
 formatCode = 'CCD'
@@ -83,12 +105,9 @@ originatingDFIId = 'ODFID45'
 username = 'admin'
 password = 'Atlanta2009!'
 credentialName = 'credentialName'
-checkFileLocation = 'checkFileLocation'
-achFileLocation = 'achFileLocation'
-cardFileLocation = 'cardFileLocation'
-checkFileLocation = '/regal-partners/QAtest/CHEK'
-achFileLocation = '/regal-partners/QAtest/ACH'
-cardFileLocation = '/regal-partners/QAtest/CARD'
+checkFileLocation = '/regal-partners/QAtest/CHEK/'
+achFileLocation = '/regal-partners/QAtest/ACH/'
+cardFileLocation = '/regal-partners/QAtest/CARD/'
 authenticationType1 = 'PrivateKey'
 authenticationType2 = 'Password'
 authenticationType3 = 'PrivateKeyAndPassword'
@@ -103,7 +122,7 @@ paymentType = 'Card'
 # start_date = datetime. date(2016, 1, 1)
 # end_date = datetime. date(2021, 2, 1)
 
-start_date = '2020-10-08T16:25:06.058Z'
+start_date = '2001-10-08T16:25:06.058Z'
 end_date = '2021-10-08T16:25:06.058Z'
 
 SingleTransactionReportType = '1'
@@ -114,4 +133,10 @@ ExpiredToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IkU3QkM5RTdBNzA4M0ZDMEU0NzNFM0EyNDZC
 InvalidUsername = 'cheth095@gmail.com'
 InvalidPassword = 'User@1234'
 InvalidTenant_ID= '3a70dfb8-c21e-4831-3b58-08d8b13da1e5'
-InvalidTenant_ID = '3a70dfb8-c21e-4831-3b58-08d8b13da1e5'
+
+
+amount = '100'
+DuplicatePayments = 'DuplicatePayments'
+FlaggedTransactions = 'FlaggedTransactions'
+NonUSDPayments = 'NonUSDPayments'
+null = 'null'

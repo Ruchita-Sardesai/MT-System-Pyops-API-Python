@@ -22,6 +22,257 @@ headers = {'Authorization': 'Bearer ' + tokens['access_token'], 'Content-Type': 
 
 
 
+# PaymentsOPS setup
+
+# Post Default Setup for Company Account API
+print("Post Default Setup for Company Account.")
+parameters = {'defaultNumberOfDaysForDisbursement': defaultNumberOfDaysForDisbursement,
+              'nextCheckNumber': nextCheckNumber,
+              'settlementType': settlementType1,
+              'defaultPayType': defaultPayType}
+
+response = requests.post(url + default_setup, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result1 = 'PASS'
+else:
+    result1 = 'FAIL'
+
+# Add Address for Company Account API
+print("Add Address for a Company Account.")
+parameters = {'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': countryCode,
+              'zipCode': zipCode,
+              'country': country}
+response = requests.post(url + company_address, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result2 = 'PASS'
+else:
+    result2 = 'FAIL'
+
+# Add Card-account for Company Account
+print("Add Card-account for Payment_ops Company Account .")
+parameters = {
+              'companyNumber': compNumber,
+              'fundingAlias': fundingAlias,
+              'defaultCardValidity': defaultCardValidity,
+              'cardType': cardType}
+response = requests.post(url + card_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result3 = 'PASS'
+else:
+    result3 = 'FAIL'
+
+# Add Check-account for Company Account
+print("Add check-account for Payment_ops Company Account .")
+parameters = {'defaultMailingCodeType': defaultMailingCodeType,
+              'defaultHandlingCodeType': defaultHandlingCodeType,
+              'checkFileName': checkFileName,
+              'OriginatingAccountNumber': '36925847',
+              'addressName': ReturnToName,
+              'addressLine1': addressLine1,
+              'addressLine2': addressLine2,
+              'addressLine3': addressLine3,
+              'city': city,
+              'state': state,
+              'countryCode': countryCode,
+              'zipCode': zipCode,
+              'country': country
+              }
+response = requests.post(url + check_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result4 = 'PASS'
+else:
+    result4 = 'FAIL'
+
+# Add ACH-account for Company Account
+print("Add ACH-account for Payment_ops Company Account .")
+parameters = {'fileName': fileName,
+              'immediateDestination': immediateDestination,
+              'immediateDestinationName': immediateDestinationName,
+              'immediateOrigin': immediateOrigin,
+              'immediateOriginName': immediateOriginName,
+              'companyId': companyId,
+              'formatCode': formatCode,
+              'originatingDFIId': originatingDFIId}
+response = requests.post(url + ach_account, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result5 = 'PASS'
+else:
+    result5 = 'FAIL'
+
+# View setup details for a Company Account
+print("View setup details for a Company Account")
+response = requests.get(url + setup, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result6 = 'PASS'
+else:
+    result6 = 'FAIL'
+
+# Get next_check_number form a default Company Account
+print("Get next_check_number form a default Company Account")
+response = requests.get(url + next_check_number, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result7 = 'PASS'
+else:
+    result7 = 'FAIL'
+
+# Get next_Batch_number from a default Company Account
+print("Get next_Batch_number form a default Company Account")
+response = requests.get(url + next_batch_number, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result8 = 'PASS'
+else:
+    result8 = 'FAIL'
+
+# Get next_settlement_transaction_id form a default Company Account
+print("Get next_settlement_transaction_id form a default Company Account")
+response = requests.get(url + next_settlement_transaction_id, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result9 = 'PASS'
+else:
+    result9 = 'FAIL'
+
+# SFTP
+
+# Api to add sftp for setup with PrivateKey authenticationType1.
+print("Api to add sftp for setup with PrivateKey authenticationType1.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType1}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result10 = 'PASS'
+else:
+    result10 = 'FAIL'
+
+# Generate SSH key pairs
+print("Generate SSH key pairs")
+parameters = {'privateKeyName': privateKeyName}
+response = requests.post(url + sftp_shh, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result11 = 'PASS'
+else:
+    result11 = 'FAIL'
+
+# Get Public SSH Key
+print("Get Public SSH Key")
+response = requests.get(url + sftp_shh_public_key, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result12 = 'PASS'
+else:
+    result12 = 'FAIL'
+
+# Remove SSH Keys
+print("Remove SSH Keys")
+response = requests.delete(url + sftp_shh, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result13 = 'PASS'
+else:
+    result13 = 'FAIL'
+
+
+
+# Api to add sftp for setup with Password authenticationType2.
+print("Api to add sftp for setup with Password authenticationType2.")
+parameters = {'host': host,
+              'port': port,
+              'authenticationType': authenticationType2}
+response = requests.post(url + sftp, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result14 = 'PASS'
+else:
+    result14 = 'FAIL'
+
+# Add SFTP Credentials for Company Setup
+print("Add SFTP Credentials for Company Setup")
+parameters = {'username': username,
+              'password': password,
+              'credentialName': credentialName}
+response = requests.post(url + add_credentials, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode:
+    result15 = 'PASS'
+else:
+    result15 = 'FAIL'
+
+
+# Test SFTP Connection for Company Setup
+print("Test SFTP Connection for Company Setup")
+response = requests.post(url + test_connections, headers=headers, verify=True)
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result16 = 'PASS'
+else:
+    result16 = 'FAIL'
+
+# Add file location for SFTP
+print("Add file location for SFTP")
+parameters = {'checkFileLocation': checkFileLocation,
+              'achFileLocation': achFileLocation,
+              'cardFileLocation': cardFileLocation}
+response = requests.post(url + file_location, data=json.dumps(parameters),
+                         headers=headers, verify=True)
+print('Request body: {} '.format(response.request.body))
+print('Status code: {}'.format(response.status_code))
+print('Payload:\n{}'.format(response.text))
+if response.status_code == ExpectedCode1:
+    result17 = 'PASS'
+else:
+    result17 = 'FAIL'
+
+
 # Get Entities for Applications
 print("Get Entities for Applications")
 response = requests.get(url + entities, headers=headers, verify=True)
@@ -76,7 +327,7 @@ else:
     result21 = 'FAIL'
 
 
-# Payments
+# PAYMENTS
 
 # GET all payments for particular entity
 print("GET all payments for particular entity")
@@ -244,6 +495,7 @@ else:
     result32 = 'FAIL'
 
 
+
 # Remove SFTP Credentials for Company Setup
 print("Remove SFTP Credentials for Company Setup")
 response = requests.delete(url + remove_credentials, headers=headers, verify=True)
@@ -253,3 +505,43 @@ if response.status_code == ExpectedCode1:
     result33 = 'PASS'
 else:
     result33 = 'FAIL'
+
+
+
+print("RESULTS:")
+print("Post Default Setup for Company Account: " + result1)
+print("Add Address for a Company Account: " + result2)
+print("Add Card-account for Payment_ops Company Account: " + result3)
+print("Add check-account for Payment_ops Company Account: " + result4)
+print("Add ACH-account for Payment_ops Company Account: " + result5)
+print("View setup details for a Company Account: " + result6)
+print("Get next_check_number form a default Company Account: " + result7)
+print("Get next_Batch_number form a default Company Account: " + result8)
+print("Get next_settlement_transaction_id form a default Company Account: " + result9)
+print("Api to add sftp for setup with PrivateKey authenticationType1: " + result10)
+print("Generate SSH key pairs: " + result11)
+print("Get Public SSH Key: " + result12)
+print("Remove SSH Keys: " + result13)
+print("Api to add sftp for setup with Password authenticationType2: " + result14)
+print("Add SFTP Credentials for Company Setup: " + result15)
+print("Test SFTP Connection for Company Setup: " + result16)
+print("Add file location for SFTP: " + result17)
+print("Get Entities for Applications: " + result18)
+print("Get All entity setups: " + result19)
+print("Save entity setup: " + result20)
+print("Get particular entity setup: " + result21)
+print("GET all payments for particular entity: " + result22)
+print("GET a particular payment's details of a particular entity: " + result23)
+print("Update Payment Status for Batch Payment: " + result24)
+print("GET payments based on search filter : paymentStatus: " + result25)
+print("GET payments based on search filter: vendor Name: " + result26)
+print("GET payments based on search filter: paymentType: " + result27)
+print("GET payments based on search filter: transactionNumber: " + result28)
+print("GET payments based on search filter: paymentDates: " + result29)
+print("GET payments based on search filter: ClearedDates: " + result30)
+print("POST  Retry payment: " + result31)
+print("POST  Refund payment: " + result32)
+print("Remove SFTP Credentials for Company Setup: " + result33)
+
+
+
